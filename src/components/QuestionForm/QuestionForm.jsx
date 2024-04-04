@@ -2,23 +2,25 @@ import React, { useState } from 'react';
 import './QuestionForm.css';
 
 const QuestionForm = () => {
-    const [answers, setAnswers] = useState({
-        letargia: null,
-        vomito: null,
-        fraqueza: null,
-        tremores: null,
-        poliuria: null,
-        polidipsia: null,
-        perdaDePeso: null,
-        diarreia: null,
-    });
-
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [answers, setAnswers] = useState({});
     const [advice, setAdvice] = useState('');
     const [submitted, setSubmitted] = useState(false);
 
-    const handleAnswerChange = (event) => {
-        const { name, value } = event.target;
-        setAnswers({ ...answers, [name]: value });
+    const symptoms = [
+        { name: 'letargia', label: 'Letargia' },
+        { name: 'vomito', label: 'Vômito' },
+        { name: 'fraqueza', label: 'Fraqueza' },
+        { name: 'tremores', label: 'Tremores' },
+        { name: 'poliuria', label: 'Poliúria' },
+        { name: 'polidipsia', label: 'Polidipsia' },
+        { name: 'perdaDePeso', label: 'Perda de Peso' },
+        { name: 'diarreia', label: 'Diarreia' },
+    ];
+
+    const handleAnswerClick = (answer) => {
+        setAnswers({ ...answers, [symptoms[currentQuestion].name]: answer });
+        setCurrentQuestion(currentQuestion + 1);
     };
 
     const calculateAdvice = () => {
@@ -35,204 +37,57 @@ const QuestionForm = () => {
         return '';
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmit = () => {
         const advice = calculateAdvice();
         setAdvice(advice);
         setSubmitted(true);
-        setTimeout(() => {
-            setAnswers({
-                letargia: null,
-                vomito: null,
-                fraqueza: null,
-                tremores: null,
-                poliuria: null,
-                polidipsia: null,
-                perdaDePeso: null,
-                diarreia: null,
-            });
-            setAdvice('');
-            setSubmitted(false);
-        }, 5000);
     };
 
+    const handleRestart = () => {
+        setCurrentQuestion(0);
+        setAnswers({});
+        setAdvice('');
+        setSubmitted(false);
+    };
+
+    const renderButtons = () => {
+        return (
+            <div className="d-flex flex-column question">
+                <div key={symptoms[currentQuestion].name}>
+                    <span>{symptoms[currentQuestion].label}:</span>
+                    <button
+                        type="button"
+                        className={answers[symptoms[currentQuestion].name] === 'sim' ? 'active-button' : 'inactive-button'}
+                        onClick={() => handleAnswerClick('sim')}
+                    >
+                        Sim
+                    </button>
+                    <button
+                        type="button"
+                        className={answers[symptoms[currentQuestion].name] === 'nao' ? 'active-button' : 'inactive-button'}
+                        onClick={() => handleAnswerClick('nao')}
+                    >
+                        Não
+                    </button>
+                </div>
+                {currentQuestion === symptoms.length - 1 && (
+                    <button type="button" onClick={handleSubmit} className="submit-button">Calcular</button>
+                )}
+            </div>
+        );
+    };
 
     return (
-        <div className="container my-5">
-            <form onSubmit={handleSubmit} className="question-form">
-                <div className="d-flex flex-column question">
-                    <span>Letargia:</span>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="letargia"
-                            value="sim"
-                            checked={answers.letargia === 'sim'}
-                            onChange={handleAnswerChange}
-                        />
-                        Sim
-                    </label>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="letargia"
-                            value="nao"
-                            checked={answers.letargia === 'nao'}
-                            onChange={handleAnswerChange}
-                        />
-                        Não
-                    </label>
-                    <span>Vomito:</span>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="vomito"
-                            value="sim"
-                            checked={answers.vomito === 'sim'}
-                            onChange={handleAnswerChange}
-                        />
-                        Sim
-                    </label>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="vomito"
-                            value="nao"
-                            checked={answers.vomito === 'nao'}
-                            onChange={handleAnswerChange}
-                        />
-                        Não
-                    </label>
-                    <span>Fraqueza:</span>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="fraqueza"
-                            value="sim"
-                            checked={answers.fraqueza === 'sim'}
-                            onChange={handleAnswerChange}
-                        />
-                        Sim
-                    </label>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="fraqueza"
-                            value="nao"
-                            checked={answers.fraqueza === 'nao'}
-                            onChange={handleAnswerChange}
-                        />
-                        Não
-                    </label>
-                    <span>Tremores:</span>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="tremores"
-                            value="sim"
-                            checked={answers.tremores === 'sim'}
-                            onChange={handleAnswerChange}
-                        />
-                        Sim
-                    </label>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="tremores"
-                            value="nao"
-                            checked={answers.tremores === 'nao'}
-                            onChange={handleAnswerChange}
-                        />
-                        Não
-                    </label>
-                    <span>Poliuria:</span>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="poliuria"
-                            value="sim"
-                            checked={answers.poliuria === 'sim'}
-                            onChange={handleAnswerChange}
-                        />
-                        Sim
-                    </label>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="poliuria"
-                            value="nao"
-                            checked={answers.poliuria === 'nao'}
-                            onChange={handleAnswerChange}
-                        />
-                        Não
-                    </label>
-                    <span>polidipsia:</span>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="polidipsia"
-                            value="sim"
-                            checked={answers.polidipsia === 'sim'}
-                            onChange={handleAnswerChange}
-                        />
-                        Sim
-                    </label>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="polidipsia"
-                            value="nao"
-                            checked={answers.polidipsia === 'nao'}
-                            onChange={handleAnswerChange}
-                        />
-                        Não
-                    </label>
-                    <span>Perda De Peso:</span>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="perdaDePeso"
-                            value="sim"
-                            checked={answers.perdaDePeso === 'sim'}
-                            onChange={handleAnswerChange}
-                        />
-                        Sim
-                    </label>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="perdaDePeso"
-                            value="nao"
-                            checked={answers.perdaDePeso === 'nao'}
-                            onChange={handleAnswerChange}
-                        />
-                        Não
-                    </label>
-                    <span>Diarreia:</span>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="diarreia"
-                            value="sim"
-                            checked={answers.diarreia === 'sim'}
-                            onChange={handleAnswerChange}
-                        />
-                        Sim
-                    </label>
-                    <label className="radio-label">
-                        <input
-                            type="radio"
-                            name="diarreia"
-                            value="nao"
-                            checked={answers.diarreia === 'nao'}
-                            onChange={handleAnswerChange}
-                        />
-                        Não
-                    </label>
-                </div>
-                <button type="submit" className="submit-button">Enviar</button>
+        <div className="container text-center">
+            <form className="question-form">
+                {renderButtons()}
             </form>
-            {submitted && <div className="advice">{advice}</div>}
+            {submitted && (
+                <div className="advice">
+                    {advice}
+                    <button type="button" onClick={handleRestart} className="restart-button">Refazer Teste</button>
+                </div>
+            )}
         </div>
     );
 };

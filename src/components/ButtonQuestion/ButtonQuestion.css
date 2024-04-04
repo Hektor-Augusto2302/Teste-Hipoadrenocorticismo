@@ -1,0 +1,16 @@
+.link-button {
+    margin-top: 83vh;
+    width: 200px;
+    padding: 10px 20px;
+    background-color: rgba(33, 89, 209, 0.651);
+    cursor: pointer;
+}
+
+.link-button a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.link-button:hover {
+    background-color: rgba(60, 109, 214, 0.568);
+}

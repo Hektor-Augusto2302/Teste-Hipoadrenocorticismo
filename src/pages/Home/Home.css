@@ -1,0 +1,8 @@
+.img-background {
+    background-image: url('../../assets/img/dog.jpeg');
+    background-size: 100% 100%;
+    background-position: center;
+    height: 100vh;
+    width: 100%;
+    background-repeat: no-repeat;
+}

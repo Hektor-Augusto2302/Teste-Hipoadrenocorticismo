@@ -1,11 +1,19 @@
 import './App.css';
-import QuestionForm from './components/QuestionForm/QuestionForm';
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import Home from './pages/Home/Home';
+import Question from './pages/Questions/Question';
 
 function App() {
   return (
-    <div className="container text-center my-5">
-      <h1>Formularios de perguntas:</h1>
-      <QuestionForm />
+    <div className="">
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/questions' element={<Question />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
