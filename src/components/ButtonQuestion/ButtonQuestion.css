@@ -1,9 +1,11 @@
 .link-button {
-    margin-top: 83vh;
+    position: absolute;
+    margin-top: 150vh;
     width: 200px;
     padding: 10px 20px;
     background-color: rgba(33, 89, 209, 0.651);
     cursor: pointer;
+    left: 150px;
 }
 
 .link-button a {
@@ -13,4 +15,28 @@
 
 .link-button:hover {
     background-color: rgba(60, 109, 214, 0.568);
+}
+
+@media (max-width: 768px) {
+    .link-button {
+        position: absolute;
+        margin-top: 150vh;
+        width: 150px;
+        padding: 10px 20px;
+        background-color: rgba(33, 89, 209, 0.651);
+        cursor: pointer;
+        left: 70px;
+    }
+}
+
+@media (max-width: 576px) {
+    .link-button {
+        position: absolute;
+        margin-top: 150vh;
+        width: 150px;
+        padding: 10px 20px;
+        background-color: rgba(33, 89, 209, 0.651);
+        cursor: pointer;
+        left: 20px;
+    }
 }
