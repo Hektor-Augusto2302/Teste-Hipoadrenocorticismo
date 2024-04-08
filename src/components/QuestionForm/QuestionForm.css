@@ -1,48 +1,44 @@
-.radio-input {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.render-buttons {
+    margin-top: 30vh;
 }
 
-.radio-input input {
-    appearance: none;
-    width: 2em;
-    height: 2em;
-    background-color: #171717;
-    box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
-    border-radius: 50%;
-    transition: .4s ease-in-out;
+.card-width {
+    width: 50%;
+    height: 100px;
 }
 
-.radio-input input:hover {
-    scale: 1.2;
-    cursor: pointer;
-    box-shadow: none;
+.inactive-button {
+    border: none;
+    background-color: #dad3d3d8;
+    padding: 0 20px;
 }
 
-.radio-input .circle {
-    position: relative;
-    top: 0.01em;
-    left: -1.1em;
-    width: 0.6em;
-    height: 0.6em;
-    background-color: yellow;
-    scale: 0;
-    border-radius: 10px;
-    transition: .4s ease-in-out;
+.inactive-button:hover {
+    border: none;
+    background-color: #a39c9cc4;
 }
 
-.radio-input input:checked {
-    box-shadow: none;
-    border: 1px solid yellow;
+.active-button {
+    border: none;
+    background-color: #dad3d3d8;
+    padding: 0 20px;
 }
 
-.radio-input input:checked+.circle {
-    transform: rotate(360deg);
-    scale: 1;
+.active-button:hover {
+    border: none;
+    background-color: #a39c9cc4;
 }
 
+.submit-button {
+    border: none;
+    background-color: #dad3d3d8;
+    padding: 10px 20px;
+}
 
+.submit-button:hover {
+    border: none;
+    background-color: #a39c9cc4;
+}
 
 .advice {
     margin-top: 20px;
@@ -51,4 +47,18 @@
     border: 1px solid #f5c6cb;
     border-radius: 5px;
     color: #721c24;
+}
+
+.restart-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #e48e95;
+    border: none;
+    border-radius: 5px;
+    color: #721c24;
+    width: 200px;
+}
+
+.restart-button:hover {
+    background-color: #df5e68;
 }

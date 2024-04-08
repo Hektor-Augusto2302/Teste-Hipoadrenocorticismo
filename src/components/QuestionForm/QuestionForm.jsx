@@ -20,18 +20,21 @@ const QuestionForm = () => {
 
     const handleAnswerClick = (answer) => {
         setAnswers({ ...answers, [symptoms[currentQuestion].name]: answer });
-        setCurrentQuestion(currentQuestion + 1);
+
+        if (currentQuestion < symptoms.length - 1) {
+            setCurrentQuestion(currentQuestion + 1);
+        }
     };
 
     const calculateAdvice = () => {
         const numYes = Object.values(answers).filter((answer) => answer === 'sim').length;
 
         if (numYes === 3) {
-            return 'Se marcar três sintomas, considere a chance de hipoadrenocortisismo. Para descartar, faça exames laboratoriais.';
+            return 'Probabilidade média de o animal estar com hipoadrenocorticismo. Como testes laboratoriais funcionais, indicamos: hiponatremia, Hipercalemia, Hipoglicemia, hipostenúria e Teste funcional (estimulação com ACTH)';
         } else if (numYes < 3) {
-            return 'Menos de três sintomas, leve chances. Atente-se a mais sintomas.';
+            return 'Baixa probabilidade do animal estar com hipoadrenocorticismo atente-se aos sintomas.';
         } else if (numYes > 3) {
-            return 'Mais de três sintomas, altas chances. Considerar exames laboratoriais e estado integro e físico do animal.';
+            return 'Alta probabilidade de o animal estar com hipoadrenocorticismo. Como testes laboratoriais funcionais, indicamos: hiponatremia, Hipercalemia, Hipoglicemia, hipostenúria e Teste funcional (estimulação com ACTH).';
         }
 
         return '';
@@ -52,38 +55,44 @@ const QuestionForm = () => {
 
     const renderButtons = () => {
         return (
-            <div className="d-flex flex-column question">
-                <div key={symptoms[currentQuestion].name}>
-                    <span>{symptoms[currentQuestion].label}:</span>
-                    <button
-                        type="button"
-                        className={answers[symptoms[currentQuestion].name] === 'sim' ? 'active-button' : 'inactive-button'}
-                        onClick={() => handleAnswerClick('sim')}
-                    >
-                        Sim
-                    </button>
-                    <button
-                        type="button"
-                        className={answers[symptoms[currentQuestion].name] === 'nao' ? 'active-button' : 'inactive-button'}
-                        onClick={() => handleAnswerClick('nao')}
-                    >
-                        Não
-                    </button>
+            <div className="d-flex flex-column question render-buttons justify-content-center align-items-center text-center">
+                <div className="card card-width">
+                    <div className="card-header" key={symptoms[currentQuestion].name}>
+                        <span>{symptoms[currentQuestion].label}:</span>
+                    </div>
+                    <div className='d-flex justify-content-center align-items-center my-3'>
+                        <button
+                            type="button"
+                            className={answers[symptoms[currentQuestion].name] === 'sim' ? 'active-button me-3' : 'inactive-button me-3'}
+                            onClick={() => handleAnswerClick('sim')}
+                        >
+                            Sim
+                        </button>
+                        <button
+                            type="button"
+                            className={answers[symptoms[currentQuestion].name] === 'nao' ? 'active-button' : 'inactive-button'}
+                            onClick={() => handleAnswerClick('nao')}
+                        >
+                            Não
+                        </button>
+                    </div>
+                    <div className='my-1'>
+                        {currentQuestion === symptoms.length - 1 && (
+                            <button type="button" onClick={handleSubmit} className="submit-button">Calcular</button>
+                        )}
+                    </div>
                 </div>
-                {currentQuestion === symptoms.length - 1 && (
-                    <button type="button" onClick={handleSubmit} className="submit-button">Calcular</button>
-                )}
             </div>
         );
     };
 
     return (
-        <div className="container text-center">
+        <div className="container">
             <form className="question-form">
                 {renderButtons()}
             </form>
             {submitted && (
-                <div className="advice">
+                <div className="advice mt-5 d-flex flex-column justify-content-center align-items-center">
                     {advice}
                     <button type="button" onClick={handleRestart} className="restart-button">Refazer Teste</button>
                 </div>
